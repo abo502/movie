@@ -2,11 +2,11 @@ package DBUtil;
 
 import java.sql.*;
 
-public class DbUtil {
+public class Db {
     private static String DBDriver = "com.mysql.cj.jdbc.Driver";
     private static String User = "root";
     private static String Password = "root";
-    private static String URL = "jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&serverTimezone=UTC";
+    private static String URL = "jdbc:mysql://localhost:3306/goods?serverTimezone=UTC";
     static Connection connection = null;
     static PreparedStatement preparedStatement=null;
     static Statement statement=null;
@@ -18,16 +18,6 @@ public class DbUtil {
             connection=DriverManager.getConnection(URL,User,Password);
             return connection;
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Statement createStatement(){
-        try {
-            statement=getConnection().createStatement();
-            return statement;
-        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -47,13 +37,6 @@ public class DbUtil {
         if (preparedStatement==null){
             try {
                 preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (statement==null){
-            try {
-                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

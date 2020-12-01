@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>ShowData</servlet-name>
-        <servlet-class>controller.ShowData</servlet-class>
+        <servlet-name>ClothesServlet</servlet-name>
+        <servlet-class>controller.ClothesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ShowData</servlet-name>
-        <url-pattern>/data</url-pattern>
+        <servlet-name>ClothesServlet</servlet-name>
+        <url-pattern>/get</url-pattern>
     </servlet-mapping>
 </web-app>
