@@ -1,7 +1,7 @@
-package controller;
+package servlet;
 
 import DBUtil.Db;
-import entity.Clothes;
+import bean.Movie;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,43 +15,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClothesServlet extends HttpServlet {
+public class MovieServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("gbk");
-        List<Clothes> lists = new ArrayList<>();
-        String num = req.getParameter("num");
+        List<Movie> lists = new ArrayList<>();
+        String btime = req.getParameter("btime");
         ResultSet resultSet;
         PreparedStatement preparedStatement;
         try {
-            if (num == null) {
-                String sql = "select * from stock";
+            if (btime == null) {
+                String sql = "select * from movie";
                  preparedStatement = Db.createPreparedStatement(sql);
                 if (preparedStatement != null) {
                     resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
-                        Clothes clothes = new Clothes();
-                        clothes.setId(resultSet.getInt("id"));
-                        clothes.setBrand(resultSet.getString("brand"));
-                        clothes.setNumber(Integer.valueOf(resultSet.getString("num")));
-                        clothes.setPrice(Integer.valueOf(resultSet.getString("price")));
-                        lists.add(clothes);
+                        Movie movie = new Movie();
+                        movie.setId(resultSet.getInt("id"));
+                        movie.setName(resultSet.getString("name"));
+                        movie.setBeginTime(Integer.valueOf(resultSet.getString("begin_time")));
+                        movie.setPrice(Integer.valueOf(resultSet.getString("price")));
+                        lists.add(movie);
                     }
                 }
             } else {
-                String sql = "select * from stock where num > ?";
+                String sql = "select * from movie where begin_time > ?";
                 preparedStatement = Db.createPreparedStatement(sql);
                 if (preparedStatement != null) {
-                    preparedStatement.setObject(1,num);
+                    preparedStatement.setObject(1,btime);
                     resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
-                        Clothes clothes = new Clothes();
-                        clothes.setId(resultSet.getInt("id"));
-                        clothes.setBrand(resultSet.getString("brand"));
-                        clothes.setNumber(Integer.valueOf(resultSet.getString("num")));
-                        clothes.setPrice(Integer.valueOf(resultSet.getString("price")));
-                        lists.add(clothes);
+                        Movie movie = new Movie();
+                        movie.setId(resultSet.getInt("id"));
+                        movie.setName(resultSet.getString("name"));
+                        movie.setBeginTime(Integer.valueOf(resultSet.getString("begin_time")));
+                        movie.setPrice(Integer.valueOf(resultSet.getString("price")));
+                        lists.add(movie);
                     }
                 }
             }
@@ -60,8 +60,8 @@ public class ClothesServlet extends HttpServlet {
             e.printStackTrace();
         }
         HttpSession session = req.getSession();
-        session.setAttribute("clothes", lists);
-        resp.sendRedirect("/stock.jsp");
+        session.setAttribute("movies", lists);
+        resp.sendRedirect("/movie.jsp");
     }
 
     @Override
